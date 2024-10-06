@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  strapi:
+    build: .
+    ports:
+      - "1337:1337"
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'         
+          memory: 512M          
+    volumes:
+      - .tmp:/usr/src/app/.tmp  
