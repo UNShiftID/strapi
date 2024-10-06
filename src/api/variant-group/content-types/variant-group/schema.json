@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "variant_groups",
+  "info": {
+    "singularName": "variant-group",
+    "pluralName": "variant-groups",
+    "displayName": "Variant Group",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "variant_groups"
+    },
+    "variants": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::variant.variant",
+      "mappedBy": "variant_group"
+    }
+  }
+}

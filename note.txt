@@ -1,0 +1,345 @@
+    i'm developing ecommerce app using strapi
+
+    i have scheme for transaction, orders, order-variants, product, variant & voucher look like this
+
+    {
+    "kind": "collectionType",
+    "collectionName": "transactions",
+    "info": {
+        "singularName": "transaction",
+        "pluralName": "transactions",
+        "displayName": "Transaction",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "number": {
+        "type": "uid",
+        "maxLength": 8,
+        "required": true,
+        "minLength": 8
+        },
+        "customer_phone": {
+        "type": "string"
+        },
+        "customer_name": {
+        "type": "string"
+        },
+        "customer_email": {
+        "type": "email"
+        },
+        "expired_at": {
+        "type": "datetime"
+        },
+        "paid_at": {
+        "type": "datetime"
+        },
+        "cancel_at": {
+        "type": "datetime"
+        },
+        "transaction_status": {
+        "type": "enumeration",
+        "enum": [
+            "unpaid",
+            "paid",
+            "cancel",
+            "expired"
+        ],
+        "default": "unpaid"
+        },
+        "payment_link": {
+        "type": "string"
+        },
+        "shipping_province": {
+        "type": "string"
+        },
+        "shipping_city": {
+        "type": "string"
+        },
+        "shipping_district": {
+        "type": "string"
+        },
+        "shipping_village": {
+        "type": "string"
+        },
+        "shipping_address": {
+        "type": "string"
+        },
+        "shipping_postal": {
+        "type": "string"
+        },
+        "total": {
+        "type": "decimal"
+        },
+        "discount": {
+        "type": "decimal"
+        },
+        "payment_method": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::payment-method.payment-method"
+        },
+        "orders": {
+        "type": "relation",
+        "relation": "oneToMany",
+        "target": "api::order.order",
+        "mappedBy": "transaction"
+        },
+        "users_permissions_user": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "plugin::users-permissions.user"
+        },
+        "voucher": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::voucher.voucher"
+        }
+    }
+    }
+
+
+    {
+    "kind": "collectionType",
+    "collectionName": "orders",
+    "info": {
+        "singularName": "order",
+        "pluralName": "orders",
+        "displayName": "Order",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "order_status": {
+        "type": "enumeration",
+        "enum": [
+            "pending",
+            "delivery",
+            "arrived",
+            "return"
+        ]
+        },
+        "total": {
+        "type": "decimal"
+        },
+        "shipment_vendor": {
+        "type": "blocks"
+        },
+        "shipment_tracking_number": {
+        "type": "blocks"
+        },
+        "number": {
+        "type": "string"
+        },
+        "quantity": {
+        "type": "biginteger"
+        },
+        "unit_price": {
+        "type": "decimal"
+        },
+        "arrived_at": {
+        "type": "datetime"
+        },
+        "product": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::product.product"
+        },
+        "transaction": {
+        "type": "relation",
+        "relation": "manyToOne",
+        "target": "api::transaction.transaction",
+        "inversedBy": "orders"
+        },
+        "order_variants": {
+        "type": "relation",
+        "relation": "oneToMany",
+        "target": "api::order-variant.order-variant",
+        "mappedBy": "order"
+        }
+    }
+    }
+
+    {
+    "kind": "collectionType",
+    "collectionName": "order_variants",
+    "info": {
+        "singularName": "order-variant",
+        "pluralName": "order-variants",
+        "displayName": "Order Variant",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "variant": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::variant.variant"
+        },
+        "order": {
+        "type": "relation",
+        "relation": "manyToOne",
+        "target": "api::order.order",
+        "inversedBy": "order_variants"
+        }
+    }
+    }
+
+    {
+    "kind": "collectionType",
+    "collectionName": "products",
+    "info": {
+        "singularName": "product",
+        "pluralName": "products",
+        "displayName": "Product",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+        "type": "string"
+        },
+        "price": {
+        "type": "decimal"
+        },
+        "description": {
+        "type": "richtext"
+        },
+        "brand": {
+        "type": "string"
+        },
+        "image": {
+        "type": "media",
+        "multiple": true,
+        "required": false,
+        "allowedTypes": [
+            "images",
+            "files",
+            "videos",
+            "audios"
+        ]
+        },
+        "specification": {
+        "type": "json"
+        },
+        "variant_groups": {
+        "type": "relation",
+        "relation": "oneToMany",
+        "target": "api::variant-group.variant-group",
+        "mappedBy": "product"
+        },
+        "discount": {
+        "type": "decimal"
+        }
+    }
+    }
+
+    {
+    "kind": "collectionType",
+    "collectionName": "variants",
+    "info": {
+        "singularName": "variant",
+        "pluralName": "variants",
+        "displayName": "Variant",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+        "type": "string"
+        },
+        "price_adjustment": {
+        "type": "decimal"
+        },
+        "image": {
+        "type": "media",
+        "multiple": true,
+        "required": false,
+        "allowedTypes": [
+            "images",
+            "files",
+            "videos",
+            "audios"
+        ]
+        },
+        "variant_group": {
+        "type": "relation",
+        "relation": "manyToOne",
+        "target": "api::variant-group.variant-group",
+        "inversedBy": "variants"
+        }
+    }
+    }
+
+
+    {
+    "kind": "collectionType",
+    "collectionName": "vouchers",
+    "info": {
+        "singularName": "voucher",
+        "pluralName": "vouchers",
+        "displayName": "Voucher"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "code": {
+        "type": "string"
+        },
+        "description": {
+        "type": "string"
+        },
+        "discount": {
+        "type": "decimal"
+        }
+    }
+    }
+
+
+    i want you to make custom post transaction
+
+    when creating a transaction from client will only send : 
+    {
+        customer_phone,
+        customer_name,
+        customer_email,
+        shipping_province,
+        shipping_city,
+        shipping_district,
+        shipping_village,
+        shipping_address,
+        shipping_postal,
+        payment_method,
+        voucher(sometime),
+        user(sometime),
+        orders : [
+        product,
+        order_variants : [
+            variant,
+        ]
+        ]
+    }
+
+    here's the requirement/flow
+
+    1. set discount value : if voucher aren't null you need to find voucher in the table voucher and get the discount amount
+    2. "total" calculation of each order : order->product->price + (all order-variants->variant->price_adjustment) x order.quantity
+    3. "total" calculation of transaction : (all orders->total) - discount <--- this step need to waiting No.2 done
+    4. because transaction->orders->order-variants are interconnected so this api need to inserting those table at the sametime

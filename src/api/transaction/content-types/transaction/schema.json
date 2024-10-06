@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "singularName": "transaction",
+    "pluralName": "transactions",
+    "displayName": "Transaction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "number": {
+      "type": "uid",
+      "maxLength": 8,
+      "required": true,
+      "minLength": 8
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "email"
+    },
+    "expired_at": {
+      "type": "datetime"
+    },
+    "paid_at": {
+      "type": "datetime"
+    },
+    "cancel_at": {
+      "type": "datetime"
+    },
+    "transaction_status": {
+      "type": "enumeration",
+      "enum": [
+        "unpaid",
+        "paid",
+        "cancel",
+        "expired"
+      ],
+      "default": "unpaid"
+    },
+    "payment_link": {
+      "type": "string"
+    },
+    "shipping_province": {
+      "type": "string"
+    },
+    "shipping_city": {
+      "type": "string"
+    },
+    "shipping_district": {
+      "type": "string"
+    },
+    "shipping_village": {
+      "type": "string"
+    },
+    "shipping_address": {
+      "type": "string"
+    },
+    "shipping_postal": {
+      "type": "string"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "discount": {
+      "type": "decimal"
+    },
+    "payment_method": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment-method.payment-method"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "transaction"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "voucher": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::voucher.voucher"
+    },
+    "payment_id": {
+      "type": "string"
+    }
+  }
+}

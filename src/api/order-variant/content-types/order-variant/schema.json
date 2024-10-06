@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_variants",
+  "info": {
+    "singularName": "order-variant",
+    "pluralName": "order-variants",
+    "displayName": "Order Variant",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "variant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::variant.variant"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::order.order",
+      "inversedBy": "order_variants"
+    }
+  }
+}

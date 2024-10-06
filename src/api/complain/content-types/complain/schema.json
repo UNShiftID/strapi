@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "complains",
+  "info": {
+    "singularName": "complain",
+    "pluralName": "complains",
+    "displayName": "Complain",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "complain_status": {
+      "type": "enumeration",
+      "enum": [
+        "submitted",
+        "processed",
+        "success",
+        "rejected"
+      ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order"
+    },
+    "problem": {
+      "type": "enumeration",
+      "enum": [
+        "damaged",
+        "lost",
+        "unmatched",
+        "deficient"
+      ]
+    },
+    "solution": {
+      "type": "enumeration",
+      "enum": [
+        "return",
+        "refund",
+        "change",
+        "reship"
+      ]
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "reject_reason": {
+      "type": "text"
+    },
+    "refund_account_name": {
+      "type": "string"
+    },
+    "refund_account_number": {
+      "type": "string"
+    },
+    "refund_channel": {
+      "type": "string"
+    },
+    "store_address": {
+      "type": "text"
+    },
+    "shipment_tracking_number": {
+      "type": "string"
+    },
+    "shipment_vendor": {
+      "type": "string"
+    },
+    "proof": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
