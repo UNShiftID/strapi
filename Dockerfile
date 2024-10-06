@@ -1,13 +1,11 @@
-# Dockerfile
+# Use the official Node.js image.
+FROM node:20
 
-FROM node:16-alpine
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-COPY package.json ./
-COPY package-lock.json ./
-
-RUN npm install
+RUN npm install --production
 
 COPY . .
 
@@ -15,4 +13,4 @@ RUN npm run build
 
 EXPOSE 1337
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
